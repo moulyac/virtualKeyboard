@@ -151,28 +151,83 @@
                 const capsLock = document.querySelector('.caps')
                 const active = document.querySelector('.active')
                 let capsActive = false
-                
-                //console.log(text)
+                const keyboardEvent = document.getElementsByTagName('body')[0]
+               
+                const handleKeyboardPress = (e)=>{
+                    const keyboardChar = event.key
+                    keys.forEach((key)=>{
+                        //console.log(keyboardChar,key.innerHTML.toLowerCase())
+                        if(key.innerHTML.toLowerCase() === keyboardChar){
+                            //console.log(key.innerHTML)
+                            key.style='background-color:grey'
+                            setTimeout(()=>{
+                                key.style='background-color:white'
+                            },500)
+                        }
+                        
+                    })
+                    switch(keyboardChar){
+                        
+                        case "Enter" : {
+                            enter.style='background-color:grey'
+                            setTimeout(()=>{
+                                enter.style='background-color:white'
+                            },500)
+                            text.innerHTML = text.innerHTML + '\n' + ''
+                            break;
+                        }
+
+                        case "Backspace" : {
+                            backspace.style='background-color:grey'
+                            setTimeout(()=>{
+                                backspace.style='background-color:white'
+                            },500)
+                            const textvalue = text.innerHTML.slice(0,(text.value.length-1))
+                            text.innerHTML = textvalue
+                            break;
+                        }
+
+                        case "CapsLock" : {
+                            capsLock.style='background-color:grey'
+                            setTimeout(()=>{
+                                capsLock.style='background-color:white'
+                            },500)
+                            capsActive = !capsActive
+                            if(capsActive)active.style='background-color:green'
+                            else{active.style='background-color:white'}
+                            break;
+                        }
+                        default : {
+                            keyValue = keyboardChar
+                            if(!capsActive){
+                                keyValue = keyValue.toLowerCase()
+                            }
+                            let textvalue = text.innerHTML+keyValue
+                            text.innerHTML = textvalue
+                            break;
+                        }
+                    }
+                }
+
+                keyboardEvent.addEventListener('keydown', handleKeyboardPress)
+
                 const inputText = (key)=>{
                     key.style='background-color:grey'
                     setTimeout(()=>{
-                        key.style='background-color:whiet'
+                        key.style='background-color:white'
                     },500)
-                    //console.log(key, enter)</div>
-                   // console.log(key,text.innerHTML)
+                    
                     switch(key){
                        
                         case enter : {
-                            //console.log('djdj')
-                            //const textvalue = `${text.innerHTML}\n`
                             text.innerHTML = text.innerHTML + '\n' + ''
                             break;
                         }
                         case backspace : {
-                            console.log(key)
+                            //console.log(key)
                             const textvalue = text.innerHTML.slice(0,(text.value.length-1))
                             text.innerHTML = textvalue
-                            console.log(textvalue)
+                           // console.log(textvalue)
                             break;
                         }
                         case capsLock : {
@@ -195,7 +250,6 @@
                     
                 }
                 keys.forEach(key => {
-                    //console.log(value)
                     key.addEventListener('click',()=>{playclip();inputText(key)})
                 });
             </script>
