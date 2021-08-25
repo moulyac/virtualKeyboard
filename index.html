@@ -155,6 +155,7 @@
                
                 const handleKeyboardPress = (e)=>{
                     const keyboardChar = event.key
+                    console.log(keyboardChar)
                     keys.forEach((key)=>{
                         //console.log(keyboardChar,key.innerHTML.toLowerCase())
                         if(key.innerHTML.toLowerCase() === keyboardChar){
@@ -209,7 +210,7 @@
                     }
                 }
 
-                keyboardEvent.addEventListener('keydown', handleKeyboardPress)
+                keyboardEvent.addEventListener('keydown',()=>{playclip(), handleKeyboardPress()})
 
                 const inputText = (key)=>{
                     key.style='background-color:grey'
