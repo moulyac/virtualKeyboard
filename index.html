@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Virtual Keyboard</title>
+        <script type="text/javascript" src="sound-onclick.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            .keyboard{
+                position: fixed;
+                right: 0;
+                left: 0;
+                bottom: 0;
+                display: flex;
+                flex-direction: column;
+                border: 2px solid black;
+                justify-content: center;
+                align-items: center;
+                margin:auto;
+                padding: 1rem ;
+                width: 900px;
+            }
+            .row{
+                display: flex;
+            }
+            .key{
+                border: 2px solid black;
+                width: 60px;
+                height: 60px;
+                background-color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 3px;
+                position:relative
+            }
+            .spacebar{
+                width: 300px;
+            }
+            .backspace{
+                width: 50px
+            }
+            .enter{
+                width:50px;
+            }
+            .caps{
+                width:50px;
+            }
+            .active{
+            border: 1px solid black;
+            border-radius: 50%;
+            position: absolute;
+            height: 5px;
+            width: 5px;
+            top: 3px;;
+            right: 3px;
+            }
+            
+            .inputField{
+                width:80%;
+               font-size: 1.5rem;
+               display:flex;
+               height: 32vh;
+               overflow:auto;
+               overflow-x: hidden;
+               margin: 10px auto;
+            }
+
+            
+           
+        </style>
+    </head>
+    <body>
+    
+        <textarea disabled={true} class="inputField"></textarea>
+
+        <div class='keyboard'>
+            
+            <div class='row'>
+                <button class='key b' >1</button>
+                <button class='key b' >2</button>
+                <button class='key b' >3</button>
+                <button class='key b' >4</button>
+                <button class='key b' >5</button>
+                <button class='key b' >6</button>
+                <button class='key b' >7</button>
+                <button class='key b' >8</button>
+                <button class='key b' >9</button>
+                <button class='key b' >0</button>
+            </div>
+    
+            <div class='row'>
+                
+                <button class='key b' >Q</button>
+                <button class='key b' >W</button>
+                <button class='key b' >E</button>
+                <button class='key b' >R</button>
+                <button class='key b' >T</button>
+                <button class='key b' >Y</button>
+                <button class='key b' >U</button>
+                <button class='key b' >I</button>
+                <button class='key b' >O</button>
+                <button class='key b' >P</button>
+                
+            </div>
+    
+            <div class='row'>
+                <button class='key b' >A</button>
+                <button class='key b' >S</button>
+                <button class='key b' >D</button>
+                <button class='key b' >F</button>
+                <button class='key b' >G</button>
+                <button class='key b' >H</button>
+                <button class='key b' >J</button>
+                <button class='key b' >K</button>
+                <button class='key b' >L</button>
+            </div>
+            <div class='row'>
+                <button class='key caps' >caps <div class='active'></div></button>
+                <button class='key b' >Z</button>
+                <button class='key b' >X</button>
+                <button class='key b' >C</button>
+                <button class='key b' >V</button>
+                <button class='key b' >B</button>
+                <button class='key b' >N</button>
+                <button class='key b' >M</button>
+                <button class='key backspace' ><i class="fas fa-backspace"></i></button>
+            </div>
+            <div class='row'>
+                <button class='key'>.</button>
+                <button class='key spacebar' > </button>
+                <button class='key'>,</button>
+                <button class='key enter' >enter</button>
+
+            </div>
+            <div>
+                <audio>
+                    <source src="click.mp3" type="audio/mpeg"/>
+                    <source src="click.ogg" type="audio/ogg"/>
+                </audio>
+            </div>
+            <script>
+    
+                const keys = document.querySelectorAll('.key')
+                const text = document.querySelector('.inputField')
+                const enter = document.querySelector('.enter')
+                const backspace = document.querySelector('.backspace')
+                const capsLock = document.querySelector('.caps')
+                const active = document.querySelector('.active')
+                let capsActive = false
+                
+                //console.log(text)
+                const inputText = (key)=>{
+                    
+                    //console.log(key, enter)</div>
+                   // console.log(key,text.innerHTML)
+                    switch(key){
+                       
+                        case enter : {
+                            //console.log('djdj')
+                            //const textvalue = `${text.innerHTML}\n`
+                            text.innerHTML = text.innerHTML + '\n' + ''
+                            break;
+                        }
+                        case backspace : {
+                            console.log(key)
+                            const textvalue = text.innerHTML.slice(0,(text.value.length-1))
+                            text.innerHTML = textvalue
+                            console.log(textvalue)
+                            break;
+                        }
+                        case capsLock : {
+                            capsActive = !capsActive
+                            if(capsActive)active.style='background-color:green'
+                            else{active.style='background-color:white'}
+                            break;
+                        }
+                        default : {
+                            //console.log(textvalue)
+                            keyValue = key.innerHTML
+                            if(!capsActive){
+                                keyValue = keyValue.toLowerCase()
+                            }
+                            let textvalue = text.innerHTML+keyValue
+                            text.innerHTML = textvalue
+                            break;
+                        }
+                    }
+                    
+                }
+                keys.forEach(key => {
+                    //console.log(value)
+                    key.addEventListener('click',()=>{playclip();inputText(key)})
+                });
+            </script>
+    </body>
+</html>
